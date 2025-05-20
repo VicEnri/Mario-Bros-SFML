@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/mario.dir/src/Main.cpp.o -o mario  -Wl,-rpath,/usr/local/lib /usr/local/lib/libsfml-graphics.so.3.0.0 /usr/local/lib/libsfml-window.so.3.0.0 /usr/local/lib/libsfml-system.so.3.0.0 
