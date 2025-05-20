@@ -3,13 +3,18 @@
 
 #include"../headers/Global.h"
 #include "../headers/Utils.h"
+#include "../headers/Map.h"
+#include "../headers/Renderer.h"
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE);
     window.setFramerateLimit(FRAMERATE);
 
     State state;
-    sf::Clock clock;
+
+    Renderer renderer(window);
+    Map map;
+    map.createTestMap(CELL_WIDTH);
 
     while(window.isOpen()){
         
@@ -18,10 +23,8 @@ int main(){
             [&state](const auto& event) { handle(event, state); }
         );
 
-        state.update(clock.restart().asSeconds());
-
         window.clear(sf::Color(0, 219, 255));
-        state.draw(window);
+        map.draw(renderer);
         window.display();
     }
 
