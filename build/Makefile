@@ -153,6 +153,30 @@ src/Main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Main.cpp.s
 .PHONY : src/Main.cpp.s
 
+src/Object.o: src/Object.cpp.o
+.PHONY : src/Object.o
+
+# target to build an object file
+src/Object.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Object.cpp.o
+.PHONY : src/Object.cpp.o
+
+src/Object.i: src/Object.cpp.i
+.PHONY : src/Object.i
+
+# target to preprocess a source file
+src/Object.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Object.cpp.i
+.PHONY : src/Object.cpp.i
+
+src/Object.s: src/Object.cpp.s
+.PHONY : src/Object.s
+
+# target to generate assembly for a file
+src/Object.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Object.cpp.s
+.PHONY : src/Object.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +189,9 @@ help:
 	@echo "... src/Main.o"
 	@echo "... src/Main.i"
 	@echo "... src/Main.s"
+	@echo "... src/Object.o"
+	@echo "... src/Object.i"
+	@echo "... src/Object.s"
 .PHONY : help
 
 
