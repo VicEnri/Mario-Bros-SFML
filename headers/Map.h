@@ -15,10 +15,10 @@ class Map{
         void update(float deltaTime) {};
 
 
-        std::vector<std::vector<Object*>>& getMap2D() {return map2D;}; 
+        Map2D& getMap2D() {return map2D;}; 
 
 
     private:
-        std::vector<std::vector<Object*>> map2D;    //mappa 2D
+        Map2D map2D;    //mappa 2D
 
 };
