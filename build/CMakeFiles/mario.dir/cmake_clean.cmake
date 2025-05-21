@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/mario.dir/src/Main.cpp.o.d"
   "CMakeFiles/mario.dir/src/Map.cpp.o"
   "CMakeFiles/mario.dir/src/Map.cpp.o.d"
+  "CMakeFiles/mario.dir/src/Mario.cpp.o"
+  "CMakeFiles/mario.dir/src/Mario.cpp.o.d"
   "CMakeFiles/mario.dir/src/Object.cpp.o"
   "CMakeFiles/mario.dir/src/Object.cpp.o.d"
   "CMakeFiles/mario.dir/src/Renderer.cpp.o"

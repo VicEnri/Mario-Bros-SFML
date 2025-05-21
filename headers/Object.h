@@ -5,7 +5,8 @@
 #include"Renderer.h"
 
 enum class ObjectType{
-    FLOOR
+    FLOOR,
+    MARIO
 };
 
 class Object {

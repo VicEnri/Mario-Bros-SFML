@@ -111,10 +111,24 @@ CMakeFiles/mario.dir/src/Map.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mario.dir/src/Map.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vicenri/Mario-Bros-SFML/src/Map.cpp -o CMakeFiles/mario.dir/src/Map.cpp.s
 
+CMakeFiles/mario.dir/src/Mario.cpp.o: CMakeFiles/mario.dir/flags.make
+CMakeFiles/mario.dir/src/Mario.cpp.o: /home/vicenri/Mario-Bros-SFML/src/Mario.cpp
+CMakeFiles/mario.dir/src/Mario.cpp.o: CMakeFiles/mario.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/mario.dir/src/Mario.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mario.dir/src/Mario.cpp.o -MF CMakeFiles/mario.dir/src/Mario.cpp.o.d -o CMakeFiles/mario.dir/src/Mario.cpp.o -c /home/vicenri/Mario-Bros-SFML/src/Mario.cpp
+
+CMakeFiles/mario.dir/src/Mario.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mario.dir/src/Mario.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vicenri/Mario-Bros-SFML/src/Mario.cpp > CMakeFiles/mario.dir/src/Mario.cpp.i
+
+CMakeFiles/mario.dir/src/Mario.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mario.dir/src/Mario.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vicenri/Mario-Bros-SFML/src/Mario.cpp -o CMakeFiles/mario.dir/src/Mario.cpp.s
+
 CMakeFiles/mario.dir/src/Object.cpp.o: CMakeFiles/mario.dir/flags.make
 CMakeFiles/mario.dir/src/Object.cpp.o: /home/vicenri/Mario-Bros-SFML/src/Object.cpp
 CMakeFiles/mario.dir/src/Object.cpp.o: CMakeFiles/mario.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/mario.dir/src/Object.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/mario.dir/src/Object.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mario.dir/src/Object.cpp.o -MF CMakeFiles/mario.dir/src/Object.cpp.o.d -o CMakeFiles/mario.dir/src/Object.cpp.o -c /home/vicenri/Mario-Bros-SFML/src/Object.cpp
 
 CMakeFiles/mario.dir/src/Object.cpp.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/mario.dir/src/Object.cpp.s: cmake_force
 CMakeFiles/mario.dir/src/Renderer.cpp.o: CMakeFiles/mario.dir/flags.make
 CMakeFiles/mario.dir/src/Renderer.cpp.o: /home/vicenri/Mario-Bros-SFML/src/Renderer.cpp
 CMakeFiles/mario.dir/src/Renderer.cpp.o: CMakeFiles/mario.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/mario.dir/src/Renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/mario.dir/src/Renderer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mario.dir/src/Renderer.cpp.o -MF CMakeFiles/mario.dir/src/Renderer.cpp.o.d -o CMakeFiles/mario.dir/src/Renderer.cpp.o -c /home/vicenri/Mario-Bros-SFML/src/Renderer.cpp
 
 CMakeFiles/mario.dir/src/Renderer.cpp.i: cmake_force
@@ -144,6 +158,7 @@ mario_OBJECTS = \
 "CMakeFiles/mario.dir/src/FloorBlock.cpp.o" \
 "CMakeFiles/mario.dir/src/Main.cpp.o" \
 "CMakeFiles/mario.dir/src/Map.cpp.o" \
+"CMakeFiles/mario.dir/src/Mario.cpp.o" \
 "CMakeFiles/mario.dir/src/Object.cpp.o" \
 "CMakeFiles/mario.dir/src/Renderer.cpp.o"
 
@@ -153,6 +168,7 @@ mario_EXTERNAL_OBJECTS =
 mario: CMakeFiles/mario.dir/src/FloorBlock.cpp.o
 mario: CMakeFiles/mario.dir/src/Main.cpp.o
 mario: CMakeFiles/mario.dir/src/Map.cpp.o
+mario: CMakeFiles/mario.dir/src/Mario.cpp.o
 mario: CMakeFiles/mario.dir/src/Object.cpp.o
 mario: CMakeFiles/mario.dir/src/Renderer.cpp.o
 mario: CMakeFiles/mario.dir/build.make
@@ -160,7 +176,7 @@ mario: /usr/local/lib/libsfml-graphics.so.3.0.0
 mario: /usr/local/lib/libsfml-window.so.3.0.0
 mario: /usr/local/lib/libsfml-system.so.3.0.0
 mario: CMakeFiles/mario.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable mario"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/vicenri/Mario-Bros-SFML/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable mario"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mario.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

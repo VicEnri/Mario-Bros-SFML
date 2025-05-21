@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/vicenri/Mario-Bros-SFML/src/FloorBlock.cpp" "CMakeFiles/mario.dir/src/FloorBlock.cpp.o" "gcc" "CMakeFiles/mario.dir/src/FloorBlock.cpp.o.d"
   "/home/vicenri/Mario-Bros-SFML/src/Main.cpp" "CMakeFiles/mario.dir/src/Main.cpp.o" "gcc" "CMakeFiles/mario.dir/src/Main.cpp.o.d"
   "/home/vicenri/Mario-Bros-SFML/src/Map.cpp" "CMakeFiles/mario.dir/src/Map.cpp.o" "gcc" "CMakeFiles/mario.dir/src/Map.cpp.o.d"
+  "/home/vicenri/Mario-Bros-SFML/src/Mario.cpp" "CMakeFiles/mario.dir/src/Mario.cpp.o" "gcc" "CMakeFiles/mario.dir/src/Mario.cpp.o.d"
   "/home/vicenri/Mario-Bros-SFML/src/Object.cpp" "CMakeFiles/mario.dir/src/Object.cpp.o" "gcc" "CMakeFiles/mario.dir/src/Object.cpp.o.d"
   "/home/vicenri/Mario-Bros-SFML/src/Renderer.cpp" "CMakeFiles/mario.dir/src/Renderer.cpp.o" "gcc" "CMakeFiles/mario.dir/src/Renderer.cpp.o.d"
   )
