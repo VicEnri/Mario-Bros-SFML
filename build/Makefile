@@ -201,6 +201,30 @@ src/Map.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Map.cpp.s
 .PHONY : src/Map.cpp.s
 
+src/Mario.o: src/Mario.cpp.o
+.PHONY : src/Mario.o
+
+# target to build an object file
+src/Mario.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Mario.cpp.o
+.PHONY : src/Mario.cpp.o
+
+src/Mario.i: src/Mario.cpp.i
+.PHONY : src/Mario.i
+
+# target to preprocess a source file
+src/Mario.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Mario.cpp.i
+.PHONY : src/Mario.cpp.i
+
+src/Mario.s: src/Mario.cpp.s
+.PHONY : src/Mario.s
+
+# target to generate assembly for a file
+src/Mario.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mario.dir/build.make CMakeFiles/mario.dir/src/Mario.cpp.s
+.PHONY : src/Mario.cpp.s
+
 src/Object.o: src/Object.cpp.o
 .PHONY : src/Object.o
 
@@ -267,6 +291,9 @@ help:
 	@echo "... src/Map.o"
 	@echo "... src/Map.i"
 	@echo "... src/Map.s"
+	@echo "... src/Mario.o"
+	@echo "... src/Mario.i"
+	@echo "... src/Mario.s"
 	@echo "... src/Object.o"
 	@echo "... src/Object.i"
 	@echo "... src/Object.s"
