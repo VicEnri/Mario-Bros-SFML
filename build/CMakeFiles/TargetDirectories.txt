@@ -1,3 +1,0 @@
-/home/vicenri/Mario-Bros-SFML/build/CMakeFiles/mario.dir
-/home/vicenri/Mario-Bros-SFML/build/CMakeFiles/edit_cache.dir
-/home/vicenri/Mario-Bros-SFML/build/CMakeFiles/rebuild_cache.dir
