@@ -22,6 +22,9 @@ class Mario :
         private:
 
             float speed;
+            float verticalSpeed;
+            float jumpSpeed;
+
             sf::Texture texture;
             std::unique_ptr<sf::Sprite> sprite;
 

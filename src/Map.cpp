@@ -13,7 +13,8 @@ Map::Map(){}
 void Map::createMapFromFile(const char* filename){
     map2D.clear();
     sf::Image image;
-    image.loadFromFile(filename);
+    if(!image.loadFromFile(filename))
+        std::cerr << "Errore: impossibile caricare MarioIdle.png\n";
     
     for(int x = 0; x < image.getSize().x; x++){
         Column column;

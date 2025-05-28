@@ -6,7 +6,9 @@
 
 Mario::Mario(sf::Vector2f position) : 
     Object(ObjectType::MARIO),
-    speed(300){
+    speed(300),
+    verticalSpeed(0),
+    jumpSpeed(-600){
 
     rect = sf::FloatRect(position, sf::Vector2f{45.f, 45.f});
 
@@ -35,19 +37,20 @@ void Mario::init(){
 void Mario::update(float deltaTime){
 
     float velocity = 0.0f;
-    float verticalVelocity = 0.0f;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
         velocity = -speed * deltaTime;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
         velocity = speed * deltaTime;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
-        verticalVelocity = -speed * deltaTime;
+        verticalSpeed = -speed * deltaTime;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
-        verticalVelocity = speed * deltaTime;
+        verticalSpeed = speed * deltaTime;
+
+    verticalSpeed += GRAVITY * deltaTime;
 
     rect.position.x += velocity;
-    rect.position.y += verticalVelocity;
+    rect.position.y += verticalSpeed * deltaTime;
 
 }
 

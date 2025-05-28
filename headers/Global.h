@@ -14,3 +14,5 @@ constexpr float FRAMERATE = 60;
 #define Map2D std::vector<std::vector<std::unique_ptr<Object>>>
 #define Column std::vector<std::unique_ptr<Object>>
 #define Obj std::unique_ptr<Object>
+
+#define GRAVITY 9.81f
