@@ -1,13 +1,13 @@
 #include <iostream>
 
-#include "../headers/FloorBlock.h"
+#include "../headers/Block.h"
 #include "../headers/Global.h"
 
-FloorBlock::FloorBlock() : Object(ObjectType::FLOOR) {}
+Block::Block() : Object(ObjectType::BLOCK) {}
 
-void FloorBlock::init() {
-    if(!texture.loadFromFile("../assets/images/Landscape/FloorBlock.png"))
-        std::cerr << "Errore: impossibile caricare FloorBlock.png\n";
+void Block::init() {
+    if(!texture.loadFromFile("../assets/images/Landscape/Block.png"))
+        std::cerr << "Errore: impossibile caricare Block.png\n";
     
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);
@@ -18,7 +18,7 @@ void FloorBlock::init() {
     ));
 }
 
-void FloorBlock::draw(Renderer& renderer){
+void Block::draw(Renderer& renderer){
     if(sprite)
         renderer.draw(*sprite);
 }
