@@ -6,6 +6,11 @@
 #include "../headers/Map.h"
 #include "../headers/Renderer.h"
 #include "../headers/Mario.h"
+#include"../headers/Camera.h"
+
+Map map;
+Mario mario;
+Camera camera;
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE);
@@ -16,11 +21,8 @@ int main(){
     State state;
 
     Renderer renderer(window);
-    Map map;
-    map.createTestMap(CELL_WIDTH);
+    map.createMapFromFile("../assets/images/TestMap.png");
 
-    Mario mario(sf::Vector2f(50, 50));
-    mario.init();
 
     while(window.isOpen()){
         
@@ -31,6 +33,7 @@ int main(){
 
         float deltaTime = clock.restart().asSeconds();
 
+        camera.updateView(view, window, mario, map);
         window.setView(view);
 
         window.clear(sf::Color(0, 219, 255));

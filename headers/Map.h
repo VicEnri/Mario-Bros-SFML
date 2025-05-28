@@ -10,7 +10,7 @@
 class Map{
     public:
         Map();
-        void createTestMap(int lenght);
+        void createMapFromFile(const char* filename);
         void draw(Renderer& renderer);
         void update(float deltaTime) {};
 
