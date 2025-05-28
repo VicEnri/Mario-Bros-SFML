@@ -7,10 +7,12 @@
 #include "../headers/Renderer.h"
 #include "../headers/Mario.h"
 #include"../headers/Camera.h"
+#include "../headers/Collision.h"
 
 Map map;
 Mario mario;
 Camera camera;
+Collision collision(map.getMap2D());
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE);

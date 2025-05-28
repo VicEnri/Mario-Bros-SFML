@@ -24,6 +24,7 @@ class Mario :
             float speed;
             float verticalSpeed;
             float jumpSpeed;
+            bool isGrounded;
 
             sf::Texture texture;
             std::unique_ptr<sf::Sprite> sprite;

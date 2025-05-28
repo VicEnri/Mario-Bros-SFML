@@ -15,4 +15,4 @@ constexpr float FRAMERATE = 60;
 #define Column std::vector<std::unique_ptr<Object>>
 #define Obj std::unique_ptr<Object>
 
-#define GRAVITY 9.81f
+#define GRAVITY 981.f
