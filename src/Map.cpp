@@ -2,31 +2,44 @@
 
 #include"../headers/Map.h"
 #include"../headers/FloorBlock.h"
+#include"../headers/StairBlock.h"
+#include"../headers/Block.h"
+#include"../headers/Mario.h"
 
+extern Mario mario;
 
 Map::Map(){}
 
-void Map::createTestMap(int length){
-
+void Map::createMapFromFile(const char* filename){
     map2D.clear();
-    map2D.resize(length);
-    for(int i = 0; i < length; i++)
-        map2D[i].resize(CELL_HEIGHT);
+    sf::Image image;
+    image.loadFromFile(filename);
+    
+    for(int x = 0; x < image.getSize().x; x++){
+        Column column;
+        for (int y = 0; y < image.getSize().y; y++){
+           Obj obj = nullptr;
+            sf::Color pixelColor(image.getPixel(sf::Vector2u(x, y)));
 
-    for(int i = 0; i < length; i++){
-        Obj floor = std::make_unique<FloorBlock>();
-        floor->init();
-        floor->setPosition(i * CELL_SIZE, (CELL_HEIGHT - 1) * CELL_SIZE);
-        map2D[i][CELL_HEIGHT - 1] = std::move(floor);
-
-        if((i + 1) % 6 == 0){
-            for(int j = CELL_HEIGHT - (180 / CELL_SIZE); j < CELL_HEIGHT; j++){
-                Obj verticalFloor = std::make_unique<FloorBlock>();
-                verticalFloor->init();
-                verticalFloor->setPosition(i * CELL_SIZE, j * CELL_SIZE);
-                map2D[i][j] = std::move(verticalFloor);
+            if(pixelColor == sf::Color::Red){
+                mario.init();
+                mario.setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color::Black){
+                obj = std::make_unique<FloorBlock>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(80, 40, 10)){
+                obj = std::make_unique<StairBlock>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(128, 64, 0)){
+                obj = std::make_unique<Block>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }
+            column.push_back(std::move(obj));
         }
+        map2D.push_back(std::move(column));
     }
 }
 

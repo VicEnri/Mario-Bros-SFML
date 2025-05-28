@@ -12,6 +12,10 @@ Mario::Mario(sf::Vector2f position) :
 
 }
 
+void Mario::setPosition(float x, float y){
+    rect.position = {x,y};
+    sprite->setPosition({x, y});
+}
 
 void Mario::init(){
     if(!texture.loadFromFile("../assets/images/Mario/MarioIdle.png"))
