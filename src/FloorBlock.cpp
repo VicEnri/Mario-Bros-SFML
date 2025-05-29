@@ -2,12 +2,13 @@
 
 #include "../headers/FloorBlock.h"
 #include "../headers/Global.h"
+#include "../headers/TextureManager.h"
 
 FloorBlock::FloorBlock() : Object(ObjectType::FLOOR) {}
 
 void FloorBlock::init() {
-    if(!texture.loadFromFile("../assets/images/Landscape/FloorBlock.png"))
-        std::cerr << "Errore: impossibile caricare FloorBlock.png\n";
+    
+    texture = TextureManager::getTexture("../assets/images/Landscape/FloorBlock.png");
     
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);
