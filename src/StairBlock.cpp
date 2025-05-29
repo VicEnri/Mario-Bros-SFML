@@ -2,12 +2,13 @@
 
 #include "../headers/StairBlock.h"
 #include "../headers/Global.h"
+#include "../headers/TextureManager.h"
 
 StairBlock::StairBlock() : Object(ObjectType::STAIR) {}
 
 void StairBlock::init() {
-    if(!texture.loadFromFile("../assets/images/Landscape/StairBlock.png"))
-        std::cerr << "Errore: impossibile caricare StairBlock.png\n";
+    
+    texture = TextureManager::getTexture("../assets/images/Landscape/StairBlock.png");
     
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);

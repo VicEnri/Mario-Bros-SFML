@@ -2,12 +2,13 @@
 
 #include "../headers/Block.h"
 #include "../headers/Global.h"
+#include "../headers/TextureManager.h"
 
 Block::Block() : Object(ObjectType::BLOCK) {}
 
-void Block::init() {
-    if(!texture.loadFromFile("../assets/images/Landscape/Block.png"))
-        std::cerr << "Errore: impossibile caricare Block.png\n";
+void Block::init(){
+
+    texture = TextureManager::getTexture("../assets/images/Landscape/Block.png");
     
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);

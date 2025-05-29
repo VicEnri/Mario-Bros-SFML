@@ -4,6 +4,7 @@
 #include"../headers/Global.h"
 #include"../headers/Map.h"
 #include"../headers/Collision.h"
+#include "../headers/TextureManager.h"
 
 extern Collision collision;
 
@@ -24,8 +25,7 @@ void Mario::setPosition(float x, float y){
 }
 
 void Mario::init(){
-    if(!texture.loadFromFile("../assets/images/Mario/MarioIdle.png"))
-        std::cerr << "Errore: impossibile caricare MarioIdle.png\n";
+    texture = TextureManager::getTexture("../assets/images/Mario/MarioIdle.png");
 
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);
