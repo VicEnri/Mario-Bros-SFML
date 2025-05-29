@@ -1,7 +1,8 @@
 #pragma once
+#include<memory>
 
 #include"Object.h"
-#include<memory>
+#include"Animation.h"
 
 class Mario :
     public Object{
@@ -25,8 +26,12 @@ class Mario :
             float verticalSpeed;
             float jumpSpeed;
             bool isGrounded;
+            bool facingLeft;
 
-            sf::Texture texture;
+
+            sf::Texture textures[5];
             std::unique_ptr<sf::Sprite> sprite;
+
+            Animation runAnimation;
 
 };

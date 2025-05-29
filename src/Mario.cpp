@@ -13,7 +13,9 @@ Mario::Mario(sf::Vector2f position) :
     speed(300),
     verticalSpeed(0),
     jumpSpeed(-600),
-    isGrounded(false){
+    isGrounded(false),
+    facingLeft(false),
+    runAnimation(0.45f){
 
     rect = sf::FloatRect(position, sf::Vector2f{45.f, 45.f});
 
@@ -25,16 +27,23 @@ void Mario::setPosition(float x, float y){
 }
 
 void Mario::init(){
-    texture = TextureManager::getTexture("../assets/images/Mario/MarioIdle.png");
+    textures[0] = TextureManager::getTexture("../assets/images/Mario/MarioWalk1.png");
+    textures[1] = TextureManager::getTexture("../assets/images/Mario/MarioWalk2.png");
+    textures[2] = TextureManager::getTexture("../assets/images/Mario/MarioWalk3.png");
+    textures[3] = TextureManager::getTexture("../assets/images/Mario/MarioIdle.png");
+    textures[4] = TextureManager::getTexture("../assets/images/Mario/MarioJump.png");
 
-    sprite = std::make_unique<sf::Sprite>(texture);
-    sprite->setTexture(texture);
+    sprite = std::make_unique<sf::Sprite>(textures[3]);
+    sprite->setTexture(textures[3]);
 
     sprite->setScale(sf::Vector2f(
-        (float)rect.size.x / texture.getSize().x,
-        (float)rect.size.y / texture.getSize().y
+        (float)rect.size.x / textures[3].getSize().x,
+        (float)rect.size.y / textures[3].getSize().y
     ));
 
+    runAnimation.addFrame(Frame(&textures[0], 0.15f));
+    runAnimation.addFrame(Frame(&textures[1], 0.30f));
+    runAnimation.addFrame(Frame(&textures[2], 0.45f));
 
 }
 
@@ -42,11 +51,13 @@ void Mario::update(float deltaTime){
 
     float velocity = 0.0f;
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)){
         velocity = -speed * deltaTime;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
+        facingLeft = true;
+    }if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)){
         velocity = speed * deltaTime;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && isGrounded){
+        facingLeft = false;
+    }if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && isGrounded){
         verticalSpeed = jumpSpeed;
         isGrounded = false;
     }
@@ -69,9 +80,24 @@ void Mario::update(float deltaTime){
     rect.position.x += velocity;
     rect.position.y += verticalSpeed * deltaTime;
 
+    if(!isGrounded) //se salta
+        sprite->setTexture(textures[4]);
+    else if(abs(velocity) > 0.02f) //se si muove
+        sprite->setTexture(*runAnimation.update(deltaTime));
+    else //se è fermo
+        sprite->setTexture(textures[3]);
+
 }
 
 void Mario::draw(Renderer& renderer){
-    sprite->setPosition(sf::Vector2f(rect.position.x, rect.position.y));
+
+    if(facingLeft){
+        sprite->setScale(sf::Vector2f(-std::abs(sprite->getScale().x), sprite->getScale().y));
+        sprite->setPosition(sf::Vector2f(rect.position.x + rect.size.x, rect.position.y));
+    }else{
+        sprite->setScale(sf::Vector2f(std::abs(sprite->getScale().x), sprite->getScale().y));
+        sprite->setPosition(sf::Vector2f(rect.position.x, rect.position.y));
+    }
+
     renderer.draw(*sprite);
 }
