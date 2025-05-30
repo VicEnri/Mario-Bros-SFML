@@ -1,9 +1,10 @@
-
 #include <iostream>
 
 #include"../headers/Collision.h"
+#include "../headers/QuestionBlock.h"
 
 extern Map map;
+extern int coinCounter;
 
 Collision::Collision(Map2D& map2D) : map2D(map2D){}
 
@@ -28,7 +29,24 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
 
             const auto& obj = map2D[column][row];
             if(obj){
-                if(obj->getType() == ObjectType::FLOOR || obj->getType() == ObjectType::STAIR || obj->getType() == ObjectType::BLOCK){
+                if(obj->getType() == ObjectType::COIN){
+                    map2D[column][row] = nullptr;
+                    coinCounter++;
+                }
+                else if(obj->getType() == ObjectType::QUESTION_BLOCK){
+                    result.collided = true;
+                    if(row == (int)((y + height) / CELL_SIZE))
+                        result.grounded = true;
+                    //se mentre si salta mario colpisce il blocco da sotto
+                    if(verticalVelocity < 0 && (y + height) > (row * CELL_SIZE)){
+                       QuestionBlock* questionBlock = dynamic_cast<QuestionBlock*>(obj.get());
+                        if(questionBlock){
+                            if(questionBlock->hit())
+                                map.spawnCoinAboveBlock(column, row);
+                        }
+                    }
+                }
+                else if(obj->getType() == ObjectType::FLOOR || obj->getType() == ObjectType::STAIR || obj->getType() == ObjectType::BLOCK){
                     result.collided = true;
                     if(verticalVelocity >= 0 && y + height <= row * CELL_SIZE + CELL_SIZE)
                         result.grounded = true;
