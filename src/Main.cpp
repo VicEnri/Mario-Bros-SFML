@@ -13,6 +13,7 @@ Map map;
 Mario mario;
 Camera camera;
 Collision collision(map.getMap2D());
+int coinCounter = 0;
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE);
@@ -21,9 +22,10 @@ int main(){
     sf::Clock clock;
     sf::View view = window.getDefaultView();
     State state;
+    state.init();
 
     Renderer renderer(window);
-    map.createMapFromFile("../assets/images/TestMap.png");
+    map.createMapFromFile("../assets/images/Map/TestMap.png");
 
 
     while(window.isOpen()){
@@ -35,14 +37,18 @@ int main(){
 
         float deltaTime = clock.restart().asSeconds();
 
+        mario.update(deltaTime);
+        map.update(deltaTime);
+
         camera.updateView(view, window, mario, map);
         window.setView(view);
 
         window.clear(sf::Color(0, 219, 255));
 
         map.draw(renderer);
-        mario.update(deltaTime);
         mario.draw(renderer);
+
+        state.draw(window);
 
         window.display();
     }

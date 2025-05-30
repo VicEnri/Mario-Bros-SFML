@@ -8,7 +8,9 @@ enum class ObjectType{
     MARIO,
     FLOOR,
     STAIR,
-    BLOCK
+    BLOCK,
+    COIN,
+    QUESTION_BLOCK
 };
 
 class Object {
