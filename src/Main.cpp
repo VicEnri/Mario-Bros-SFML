@@ -2,7 +2,7 @@
 #include <SFML/Window.hpp>
 
 #include"../headers/Global.h"
-#include "../headers/Utils.h"
+#include "../headers/State.h"
 #include "../headers/Map.h"
 #include "../headers/Renderer.h"
 #include "../headers/Mario.h"
