@@ -61,8 +61,6 @@ void Mario::update(float deltaTime){
         verticalSpeed = jumpSpeed;
         isGrounded = false;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
-        verticalSpeed = speed * deltaTime;
 
     if(deltaTime > 0.1f)   deltaTime = 0.1f;
     verticalSpeed += GRAVITY * deltaTime;
