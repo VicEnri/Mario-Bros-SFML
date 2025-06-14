@@ -16,6 +16,8 @@ class Mario :
 
             void setPosition(float x, float y) override;
 
+            void resetVerticalSpeed() { verticalSpeed = 0.f; }
+
             sf::Vector2f getPosition() const override {return sprite->getPosition();}
 
             sf::FloatRect getRect() const {return rect;}
