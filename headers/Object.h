@@ -10,7 +10,8 @@ enum class ObjectType{
     STAIR,
     BLOCK,
     COIN,
-    QUESTION_BLOCK
+    QUESTION_BLOCK,
+    CLOUD
 };
 
 class Object {

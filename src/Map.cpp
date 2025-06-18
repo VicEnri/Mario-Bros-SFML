@@ -8,6 +8,7 @@
 #include"../headers/Coin.h"
 #include"../headers/Global.h"
 #include"../headers/QuestionBlock.h"
+#include"../headers/Cloud.h"
 
 extern Mario mario;
 
@@ -32,25 +33,29 @@ void Map::createMapFromFile(const char* filename){
                 obj = std::make_unique<FloorBlock>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color(80, 40, 10)){
+            }else if(pixelColor == sf::Color(80, 40, 10)){ //marrone scuro
                 obj = std::make_unique<StairBlock>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color(128, 64, 0)){
+            }else if(pixelColor == sf::Color(128, 64, 0)){  //marrone chiaro
                 obj = std::make_unique<Block>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color(255,165,0)){
+            }else if(pixelColor == sf::Color(255,165,0)){   //arancione
                 obj = std::make_unique<QuestionBlock>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color(255,255,255)){
+            }else if(pixelColor == sf::Color(255,255,255)){ //bianco
                 obj = std::make_unique<QuestionBlock>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
                 if(auto qb = dynamic_cast<QuestionBlock*>(obj.get()))  qb->setInvisible();
-            }else if(pixelColor == sf::Color(255,255,0)){
+            }else if(pixelColor == sf::Color(255,255,0)){ //giallo
                 obj = std::make_unique<Coin>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(128,128,128)){ //grigio
+                obj = std::make_unique<Cloud>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }
