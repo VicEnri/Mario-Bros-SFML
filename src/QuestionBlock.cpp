@@ -4,7 +4,7 @@
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-QuestionBlock::QuestionBlock(int coins) : Object(ObjectType::QUESTION_BLOCK), runAnimation(2.0f), isHit(false), coins(coins) {}
+QuestionBlock::QuestionBlock(int coins) : Object(ObjectType::QUESTION_BLOCK), runAnimation(2.0f), isHit(false), coins(coins), isVisible(true) {}
 
 void QuestionBlock::init(){
     textures[0] = TextureManager::getTexture("../assets/images/QuestionBlock/QuestionBlock1.png");
@@ -35,22 +35,27 @@ void QuestionBlock::update(float deltaTime){
 }
 
 bool QuestionBlock::hit(){
-    if(coins > 0){
-        coins--;
-
-        sprite->setColor(sf::Color(255, 255, 255, 255));
-       
-        if(coins == 0){
-            isHit = true;
-            sprite->setTexture(textures[4]);
-        }
-        return true;
+    if(!isVisible){
+        isVisible = true;
+        sprite->setColor(sf::Color(255, 255, 255, 255)); //visibile
     }
-    return false;
+
+    if(coins <= 0)
+        return false;
+
+    coins--;
+    
+    if(coins == 0){
+        isHit = true;
+        sprite->setTexture(textures[4]);
+    }
+
+    return true;
 }
 
 void QuestionBlock::setInvisible(){
     sprite->setColor(sf::Color(255, 255, 255, 0));
+    isVisible = false;
 }
 
 void QuestionBlock::draw(Renderer& renderer){

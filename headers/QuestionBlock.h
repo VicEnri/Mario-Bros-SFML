@@ -20,12 +20,15 @@ class QuestionBlock : public Object{
         bool hit();
         void setInvisible();
 
+        bool isBlockVisible() const {return isVisible;}
+
     private:
         std::unique_ptr<sf::Sprite> sprite;
         sf::Texture textures[5];
 
-        bool isHit = false;     //controlla se il blocco è stato colpito
+        bool isHit;     //controlla se il blocco è stato colpito
         int coins;
+        bool isVisible; //controlla se il blocco è visibile
 
         Animation runAnimation;
 };
