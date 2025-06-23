@@ -9,6 +9,8 @@
 #include"../headers/Global.h"
 #include"../headers/QuestionBlock.h"
 #include"../headers/Cloud.h"
+#include"../headers/Bush.h"
+#include"../headers/Hill.h"
 
 extern Mario mario;
 
@@ -29,7 +31,7 @@ void Map::createMapFromFile(const char* filename){
             if(pixelColor == sf::Color::Red){
                 mario.init();
                 mario.setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color::Black){
+            }else if(pixelColor == sf::Color::Black){ //nero
                 obj = std::make_unique<FloorBlock>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
@@ -56,6 +58,14 @@ void Map::createMapFromFile(const char* filename){
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }else if(pixelColor == sf::Color(128,128,128)){ //grigio
                 obj = std::make_unique<Cloud>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(144,238,144)){ //verde chiaro
+                obj = std::make_unique<Bush>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(0,100,0)){ //verde scuro
+                obj = std::make_unique<Hill>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }
@@ -85,8 +95,34 @@ void Map::spawnCoinAboveBlock(int column, int row){
 }
 
 void Map::draw(Renderer& renderer){
-    for(size_t i = 0; i < map2D.size(); i++){
-        for(size_t j = 0; j < map2D[i].size(); j++)
-            if(map2D[i][j])    map2D[i][j]->draw(renderer); 
+    sf::View view = renderer.getWindow().getView();
+
+    sf::FloatRect viewRect(
+        view.getCenter() - view.getSize() / 2.f,
+        view.getSize()
+    );
+
+    for(size_t i = 0; i < map2D.size(); ++i){
+        for(size_t j = 0; j < map2D[i].size(); ++j){
+            auto obj = map2D[i][j].get();
+            if(obj){
+                sf::Vector2f pos = obj->getPosition();
+                sf::FloatRect objRect(pos, { CELL_SIZE, CELL_SIZE });
+
+                if(dynamic_cast<Hill*>(obj) || dynamic_cast<Cloud*>(obj)){
+                    obj->draw(renderer);
+                    continue;
+                }
+
+                if(
+                    objRect.position.x + objRect.size.x > viewRect.position.x &&
+                    objRect.position.x < viewRect.position.x + viewRect.size.x &&
+                    objRect.position.y + objRect.size.y > viewRect.position.y &&
+                    objRect.position.y < viewRect.position.y + viewRect.size.y
+                )
+                    obj->draw(renderer);
+            }
+        }
     }
 }
+

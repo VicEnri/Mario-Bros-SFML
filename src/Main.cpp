@@ -16,7 +16,7 @@ Collision collision(map.getMap2D());
 int coinCounter = 0;
 
 const char* mapFiles[] = {
-    "../assets/images/Map/TestMap.png",
+    "../assets/images/Map/Level1.png",
 };
 
 const int numMaps = 1;
@@ -50,6 +50,8 @@ int main(){
         window.setView(view);
         window.clear(sf::Color(0, 219, 255));
 
+        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window)); // calcolo mouse
+
         //--- SCHERMATA INIZIALE ---
         if(state.showStartScreen){
 
@@ -60,10 +62,10 @@ int main(){
             map.draw(renderer);
             mario.draw(renderer);
 
-            state.draw(window, view, coinCounter);
+            state.draw(renderer, view, coinCounter);
 
             //click su inizia
-            if(state.isStartClicked(window)){
+            if(state.isStartClicked(mousePos)){
                 if(!mouseWasPressed) {
                     state.showStartScreen = false;
                     justStarted = true;
@@ -94,14 +96,14 @@ int main(){
         window.clear(sf::Color(0, 219, 255));
         map.draw(renderer);
         mario.draw(renderer);
-        state.draw(window, view, coinCounter);
+        state.draw(renderer, view, coinCounter);
 
         //click su riprova o menu
-        if(state.isRetryClicked(window)) {
+        if(state.isRetryClicked(mousePos)) {
             if(!mouseWasPressed)
                 state.resetGame(map, coinCounter, mario, mapFiles[currentMapIndex]);
             mouseWasPressed = true;
-        }else if(state.isMenuClicked(window)){
+        }else if(state.isMenuClicked(mousePos)){
             if(!mouseWasPressed){
                 state.showStartScreen = true;
                 state.gameOver = false;

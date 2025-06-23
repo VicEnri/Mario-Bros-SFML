@@ -9,25 +9,32 @@
 #include"../Mario.h"
 #include"../Map.h"
 #include"../TextureManager.h"
+#include"../Renderer.h"
 
 class State{
     public:
         void init();
-        void draw(sf::RenderWindow& window, const sf::View& view, int coinCounter);
+        void draw(Renderer& renderer, const sf::View& view, int coinCounter);
         void checkGameOver(const sf::View& view, const Mario& mario);
-        bool isStartClicked(const sf::RenderWindow& window);
-        bool isRetryClicked(const sf::RenderWindow& window);
-        bool isMenuClicked(const sf::RenderWindow& window);
+
+        bool isStartClicked(const sf::Vector2f& mousePos) const;
+        bool isRetryClicked(const sf::Vector2f& mousePos) const;
+        bool isMenuClicked(const sf::Vector2f& mousePos) const;
+
         void resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile);
 
         bool showStartScreen = true;
         bool gameOver = false;
 
+
     private:
         std::unique_ptr<sf::Font> font;
         std::unique_ptr<sf::Font> titleFont;
         std::unique_ptr<sf::Sprite> coinSprite;
+        
         HUD hud;
         StartScreen startScreen;
         GameOverScreen gameOverScreen;
+
+        
 };

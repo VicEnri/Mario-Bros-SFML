@@ -34,12 +34,12 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
                     coinCounter++;
                 }else if(obj->getType() == ObjectType::QUESTION_BLOCK){
                     QuestionBlock* questionBlock = dynamic_cast<QuestionBlock*>(obj.get());
-                    // Gestisci il colpo da sotto sempre
+                
                     if(questionBlock && verticalVelocity < 0 && (y + height) > (row * CELL_SIZE)){
                         if(questionBlock->hit())
                         map.spawnCoinAboveBlock(column, row);
                     }
-                    // Collidi solo se il blocco è visibile!
+                    
                     if(questionBlock && questionBlock->isBlockVisible()){
                         result.collided = true;
                         if(row == (int)((y + height) / CELL_SIZE))

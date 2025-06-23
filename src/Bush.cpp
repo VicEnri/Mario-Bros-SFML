@@ -1,25 +1,25 @@
 #include <iostream>
 
-#include "../headers/Cloud.h"
+#include "../headers/Bush.h"
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-Cloud::Cloud() : Object(ObjectType::CLOUD) {}
+Bush::Bush() : Object(ObjectType::BUSH) {}
 
-void Cloud::init() {
+void Bush::init() {
     
-    texture = TextureManager::getTexture("../assets/images/Landscape/Cloud.png");
+    texture = TextureManager::getTexture("../assets/images/Landscape/Bush.png");
     
     sprite = std::make_unique<sf::Sprite>(texture);
     sprite->setTexture(texture);
 
     sprite->setScale(sf::Vector2f(
-        3.0f * (float)CELL_SIZE / texture.getSize().x,
+        2.f * (float)CELL_SIZE / texture.getSize().x,
         (float)CELL_SIZE / texture.getSize().y
     ));
 }
 
-void Cloud::draw(Renderer& renderer){
+void Bush::draw(Renderer& renderer){
     if(sprite)
         renderer.draw(*sprite);
 }

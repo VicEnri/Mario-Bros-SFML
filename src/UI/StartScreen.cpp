@@ -12,28 +12,24 @@ void StartScreen::init(const sf::Font& font, const sf::Font& titleFont){
     this->titleFont = &titleFont;
 }
 
-void StartScreen::draw(sf::RenderWindow& window, const sf::View& view){
+void StartScreen::draw(Renderer& renderer, const sf::View& view, const sf::Vector2f& mousePos){
 
     sf::Text imageText = makeStyledText("\"", *titleFont, 300, sf::Color::White, sf::Color::Black, 4.f);
     auto imageBounds = imageText.getLocalBounds();
     imageText.setOrigin(sf::Vector2f(imageBounds.size.x / 2.f, imageBounds.size.y / 2.f));
     imageText.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 120.f));
-    window.draw(imageText);
+    renderer.draw(imageText);
 
     sf::Vector2f pos(view.getCenter().x - 150.f, view.getCenter().y + 20.f);
     button->setPosition(pos);
-    window.draw(*button);
+    renderer.draw(*button);
 
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
-    text->setFillColor(button->getGlobalBounds().contains(worldPos) ? sf::Color::Yellow : sf::Color::White);
-
-    centerTextInButton(*text, *button, pos);
-    window.draw(*text);
+    text->setFillColor(button->getGlobalBounds().contains(mousePos) ? sf::Color::Yellow : sf::Color::White);
+    renderer.centerTextInButton(*text, *button, pos);
+    renderer.draw(*text);
 }
 
-bool StartScreen::isClicked(const sf::RenderWindow& window){
-    if (!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) return false;
-    sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-    return button->getGlobalBounds().contains(pos);
+bool StartScreen::isClicked(const sf::Vector2f& mousePos) const{
+    return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) &&
+           button->getGlobalBounds().contains(mousePos);
 }
