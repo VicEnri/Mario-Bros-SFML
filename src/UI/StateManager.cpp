@@ -19,13 +19,14 @@ void State::init(){
     gameOverScreen.init(font, titleFont, *coinSprite);
 }
 
-void State::draw(sf::RenderWindow& window, const sf::View& view, int coinCounter){
+void State::draw(Renderer& renderer, const sf::View& view, int coinCounter){
+    sf::Vector2f mousePos = renderer.getWindow().mapPixelToCoords(sf::Mouse::getPosition(renderer.getWindow()));
     if(showStartScreen)
-        startScreen.draw(window, view);
+        startScreen.draw(renderer, view, mousePos);
     else if(gameOver)
-        gameOverScreen.draw(window, view, coinCounter);
+        gameOverScreen.draw(renderer, view, coinCounter, mousePos);
     else
-        hud.draw(window, view, coinCounter);
+        hud.draw(renderer, view, coinCounter);
 }
 
 void State::checkGameOver(const sf::View& view, const Mario& mario){
@@ -35,16 +36,16 @@ void State::checkGameOver(const sf::View& view, const Mario& mario){
     
 }
 
-bool State::isStartClicked(const sf::RenderWindow& window){
-    return showStartScreen && startScreen.isClicked(window);
+bool State::isStartClicked(const sf::Vector2f& mousePos) const{
+    return showStartScreen && startScreen.isClicked(mousePos);
 }
 
-bool State::isRetryClicked(const sf::RenderWindow& window){
-    return gameOver && gameOverScreen.isRetryClicked(window);
+bool State::isRetryClicked(const sf::Vector2f& mousePos) const{
+    return gameOver && gameOverScreen.isRetryClicked(mousePos);
 }
 
-bool State::isMenuClicked(const sf::RenderWindow& window){
-    return gameOver && gameOverScreen.isMenuClicked(window);
+bool State::isMenuClicked(const sf::Vector2f& mousePos) const{
+    return gameOver && gameOverScreen.isMenuClicked(mousePos);
 }
 
 void State::resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile){

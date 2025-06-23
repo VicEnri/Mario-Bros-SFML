@@ -3,11 +3,13 @@
 #include<SFML/Graphics.hpp>
 #include<memory>
 
+#include"../Renderer.h"
+
 class StartScreen{
     public:
         void init(const sf::Font& font, const sf::Font& titleFont);
-        void draw(sf::RenderWindow& window, const sf::View& view);
-        bool isClicked(const sf::RenderWindow& window);
+        void draw(Renderer& renderer, const sf::View& view, const sf::Vector2f& mousePos);
+        bool isClicked(const sf::Vector2f& mousePos) const;
 
     private:
         std::unique_ptr<sf::Text> text;
