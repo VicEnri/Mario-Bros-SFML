@@ -12,6 +12,7 @@
 #include"../TextureManager.h"
 #include"../Renderer.h"
 #include"VictoryScreen.h"
+#include "FinalVictoryScreen.h"
 
 class State{
     public:
@@ -23,12 +24,16 @@ class State{
         bool isRetryClicked(const sf::Vector2f& mousePos) const;
         bool isMenuClicked(const sf::Vector2f& mousePos) const;
         bool isContinueClicked(const sf::Vector2f& mousePos) const;
+        bool isFinalVictoryMenuClicked(const sf::Vector2f& mousePos) const;
 
         void resetGame(Map& map, int& coinCounter, Mario& mario, std::vector<std::unique_ptr<Goomba>>& goombas, const char* mapFile);
 
         bool showStartScreen = true;
         bool gameOver = false;
         bool victory = false;
+        bool finalVictory = false;
+
+        FinalVictoryScreen& getFinalVictoryScreen() { return finalVictoryScreen; }
 
 
     private:
@@ -40,6 +45,7 @@ class State{
         StartScreen startScreen;
         GameOverScreen gameOverScreen;
         VictoryScreen victoryScreen;
+        FinalVictoryScreen finalVictoryScreen;
 
         
 };

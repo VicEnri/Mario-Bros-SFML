@@ -13,7 +13,7 @@ Goomba::Goomba(sf::Vector2f position)
       isGrounded(false),
       walkAnimation(0.30f)
 {
-    rect = sf::FloatRect(position, sf::Vector2f{45.f, 45.f});
+    rect = sf::FloatRect(position, sf::Vector2f{60.f, 60.f});
 }
 
 void Goomba::setPosition(float x, float y){
@@ -24,6 +24,7 @@ void Goomba::setPosition(float x, float y){
 void Goomba::init(){
     textures[0] = TextureManager::getTexture("../assets/images/Enemy/GoombaWalk1.png");
     textures[1] = TextureManager::getTexture("../assets/images/Enemy/GoombaWalk2.png");
+    textures[2] = TextureManager::getTexture("../assets/images/Enemy/GoombaDeath.png");
     sprite = std::make_unique<sf::Sprite>(textures[0]);
     sprite->setTexture(textures[0]);
     sprite->setScale(sf::Vector2f(
@@ -34,9 +35,20 @@ void Goomba::init(){
     walkAnimation.addFrame(Frame(&textures[1], 0.30f));
 }
 
+void Goomba::kill(){
+    dead = true;
+    deathTimer = 0.f;
+}
 
-void Goomba::update(float deltaTime) {
-    if (deltaTime > 0.1f) deltaTime = 0.1f;
+
+void Goomba::update(float deltaTime){
+    if(deltaTime > 0.1f) deltaTime = 0.1f;
+
+    if(dead){
+        deathTimer += deltaTime;
+        sprite->setTexture(textures[2]);
+        return;
+    }
 
     float velocity = direction * speed * deltaTime;
     verticalSpeed += GRAVITY * deltaTime;

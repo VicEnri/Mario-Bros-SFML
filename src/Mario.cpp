@@ -33,6 +33,7 @@ void Mario::init(){
     textures[2] = TextureManager::getTexture("../assets/images/Mario/MarioWalk3.png");
     textures[3] = TextureManager::getTexture("../assets/images/Mario/MarioIdle.png");
     textures[4] = TextureManager::getTexture("../assets/images/Mario/MarioJump.png");
+    textures[5] = TextureManager::getTexture("../assets/images/Mario/MarioDeath.png");
 
     sprite = std::make_unique<sf::Sprite>(textures[3]);
     sprite->setTexture(textures[3]);
@@ -49,7 +50,7 @@ void Mario::init(){
 }
 
 void Mario::update(float deltaTime){
-
+    if(dead || win) return;
     float velocity = 0.0f;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)){
@@ -89,7 +90,8 @@ void Mario::update(float deltaTime){
 }
 
 void Mario::draw(Renderer& renderer){
-
+    if (dead)
+        sprite->setTexture(textures[5]); // texture morte
     if(facingLeft){
         sprite->setScale(sf::Vector2f(-std::abs(sprite->getScale().x), sprite->getScale().y));
         sprite->setPosition(sf::Vector2f(rect.position.x + rect.size.x, rect.position.y));

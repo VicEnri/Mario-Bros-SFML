@@ -15,8 +15,10 @@ public:
     sf::Vector2f getPosition() const override { return sprite->getPosition(); }
     sf::FloatRect getRect() const { return rect; }
 
+
     bool isDead() const { return dead; }
-    void kill(); // nuovo metodo
+    float getDeathTimer() const { return deathTimer; }
+    void kill();
 
 private:
     float speed;
@@ -24,10 +26,9 @@ private:
     bool isGrounded = false;
     float verticalSpeed = 0.f;
     sf::FloatRect rect;
-    sf::Texture textures[2];
+    sf::Texture textures[3];
     std::unique_ptr<sf::Sprite> sprite;
     Animation walkAnimation;
-
     bool dead = false;
     float deathTimer = 0.f;
 };

@@ -21,6 +21,8 @@ class Map{
 
         sf::FloatRect getFlagRect() const;
 
+        
+
     private:
         Map2D map2D;    //mappa 2D
 

@@ -20,6 +20,11 @@ class Mario :
 
             sf::Vector2f getPosition() const override {return sprite->getPosition();}
 
+            void setVerticalSpeed(float v) { verticalSpeed = v; }
+
+            void setDead(bool d) { dead = d; }
+            void setWin(bool d) { win = d; }
+        
         private:
 
             float speed;
@@ -28,8 +33,10 @@ class Mario :
             bool isGrounded;
             bool facingLeft;
 
+            bool dead = false;
+            bool win = false;
 
-            sf::Texture textures[5];
+            sf::Texture textures[6];
             std::unique_ptr<sf::Sprite> sprite;
 
             Animation runAnimation;
