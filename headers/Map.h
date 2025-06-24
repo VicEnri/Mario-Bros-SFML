@@ -18,6 +18,9 @@ class Map{
 
         Map2D& getMap2D() {return map2D;}; 
 
+        std::pair<int, int> getFlagPosition() const;
+        bool marioHasFinished(const sf::FloatRect& marioBounds) const;
+
     private:
         Map2D map2D;    //mappa 2D
 

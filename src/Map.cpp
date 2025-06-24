@@ -11,6 +11,8 @@
 #include"../headers/Cloud.h"
 #include"../headers/Bush.h"
 #include"../headers/Hill.h"
+#include"../headers/Flag.h"
+#include"../headers/Castle.h"
 
 extern Mario mario;
 
@@ -66,6 +68,14 @@ void Map::createMapFromFile(const char* filename){
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }else if(pixelColor == sf::Color(0,100,0)){ //verde scuro
                 obj = std::make_unique<Hill>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(255,215,0)){ //oro
+                obj = std::make_unique<Flag>();
+                obj->init();
+                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(0,0,255)){ //blu
+                obj = std::make_unique<Castle>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }
@@ -126,3 +136,42 @@ void Map::draw(Renderer& renderer){
     }
 }
 
+
+std::pair<int, int> Map::getFlagPosition() const{
+    for (size_t x = 0; x < map2D.size(); ++x) {
+        for (size_t y = 0; y < map2D[x].size(); ++y) {
+            if (map2D[x][y] && map2D[x][y]->getType() == ObjectType::FLAG)
+                return {x, y};
+        }
+    }
+    return {-1, -1};
+}
+
+bool Map::marioHasFinished(const sf::FloatRect& marioBounds) const{
+    auto [flagX, flagY] = getFlagPosition();
+    if(flagX == -1) return false;
+
+    for(size_t y = flagY; y < map2D[flagX].size(); ++y){
+        const auto& obj = map2D[flagX][y];
+        if(obj){
+            //ignoro oggeti che possono essere sotto pixel dorato(nessuno)
+            ObjectType type = obj->getType();
+            if (type == ObjectType::CLOUD || type == ObjectType::BUSH) continue;
+
+            //creo un rettangolo di collisione per l'oggetto
+            sf::FloatRect objBounds(obj->getPosition(), sf::Vector2f(CELL_SIZE, CELL_SIZE));
+            if (marioBounds.findIntersection(objBounds))
+                return true;
+        }else{
+            //se la cella è vuota, creo un rettangolo nella posizione della cella vuota.
+            sf::FloatRect emptyBounds(
+                sf::Vector2f((float)(flagX * CELL_SIZE), (float)(y * CELL_SIZE)),
+                sf::Vector2f((float)(CELL_SIZE), (float)(CELL_SIZE))
+            );
+            if (marioBounds.findIntersection(emptyBounds))
+                return true;
+        }
+    }
+
+    return false;
+}

@@ -68,10 +68,10 @@ void GameOverScreen::draw(Renderer& renderer, const sf::View& view, int coinCoun
 
 bool GameOverScreen::isRetryClicked(const sf::Vector2f& mousePos) const{
     return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) &&
-           retryButton->getGlobalBounds().contains(mousePos);
+        retryButton->getGlobalBounds().contains(mousePos);
 }
 
 bool GameOverScreen::isMenuClicked(const sf::Vector2f& mousePos) const{
     return sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) &&
-           menuButton->getGlobalBounds().contains(mousePos);
+        menuButton->getGlobalBounds().contains(mousePos);
 }

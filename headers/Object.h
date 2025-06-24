@@ -13,7 +13,9 @@ enum class ObjectType{
     QUESTION_BLOCK,
     CLOUD,
     HILL,
-    BUSH
+    BUSH,
+    FLAG,
+    CASTLE
 };
 
 class Object {

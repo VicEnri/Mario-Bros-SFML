@@ -16,14 +16,16 @@ Collision collision(map.getMap2D());
 int coinCounter = 0;
 
 const char* mapFiles[] = {
-    "../assets/images/Map/Level1.png",
+    "../assets/images/Map/TestMap.png",
+    "../assets/images/Map/Level1.png"
+    
 };
 
-const int numMaps = 1;
+const int numMaps = 2;
 int currentMapIndex = 0;
 
 int main(){
-    sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE);
+    sf::RenderWindow window(sf::VideoMode({SCREEN_WIDTH, SCREEN_HEIGHT}), TITLE,  sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(FRAMERATE);
 
     sf::Clock clock;
@@ -41,7 +43,10 @@ int main(){
     while(window.isOpen()){
 
         window.handleEvents(
-            [&window](const sf::Event::Closed&) { window.close(); },
+            [&window](const sf::Event::Closed&){ window.close(); },
+            [&window](const sf::Event::Resized& event){ //se si prova a ridimensionare la finestra ritorna alla dimensione iniziale
+                window.setSize(sf::Vector2u(SCREEN_WIDTH, SCREEN_HEIGHT));
+            },
             [](const auto&) {}
         );
 
@@ -100,14 +105,30 @@ int main(){
 
         //click su riprova o menu
         if(state.isRetryClicked(mousePos)) {
-            if(!mouseWasPressed)
+            if(!mouseWasPressed){
                 state.resetGame(map, coinCounter, mario, mapFiles[currentMapIndex]);
+                clock.restart();
+            }
             mouseWasPressed = true;
         }else if(state.isMenuClicked(mousePos)){
             if(!mouseWasPressed){
                 state.showStartScreen = true;
                 state.gameOver = false;
+                state.resetGame(map, coinCounter, mario, mapFiles[0]);
+                clock.restart();
+            }
+            mouseWasPressed = true;
+        }else if(state.isContinueClicked(mousePos)){
+            if(!mouseWasPressed){
+                state.victory = false;
+                //mappa successiva
+                currentMapIndex++;
+
+                if(currentMapIndex >= numMaps)
+                    currentMapIndex = 0; //implemtentare il fine gioco
+
                 state.resetGame(map, coinCounter, mario, mapFiles[currentMapIndex]);
+                clock.restart();
             }
             mouseWasPressed = true;
         }else

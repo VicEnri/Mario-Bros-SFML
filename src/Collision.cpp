@@ -19,7 +19,9 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
         result.collided = true;
         return result;
     }
-    
+
+    sf::FloatRect marioRect(sf::Vector2f(x, y), sf::Vector2f(width, height));
+
     for(int column = tileColumnStart; column < tileColumnEnd; column++){
         if(column < 0 || column >= map2D.size()) continue;
 
@@ -29,26 +31,41 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
 
             const auto& obj = map2D[column][row];
             if(obj){
+                sf::FloatRect objRect(
+                    sf::Vector2f(float(column * CELL_SIZE), (float)(row * CELL_SIZE)),
+                    sf::Vector2f((float)CELL_SIZE, (float)CELL_SIZE));
+
                 if(obj->getType() == ObjectType::COIN){
-                    map2D[column][row] = nullptr;
-                    coinCounter++;
+                    if(marioRect.findIntersection(objRect)) {
+                        map2D[column][row] = nullptr;
+                        coinCounter++;
+                    }
                 }else if(obj->getType() == ObjectType::QUESTION_BLOCK){
                     QuestionBlock* questionBlock = dynamic_cast<QuestionBlock*>(obj.get());
-                
-                    if(questionBlock && verticalVelocity < 0 && (y + height) > (row * CELL_SIZE)){
+
+                    //colpo da sotto
+                    if(questionBlock && verticalVelocity < 0 && marioRect.findIntersection(objRect) && (y + height) > (row * CELL_SIZE)){
                         if(questionBlock->hit())
-                        map.spawnCoinAboveBlock(column, row);
+                            map.spawnCoinAboveBlock(column, row);
                     }
-                    
-                    if(questionBlock && questionBlock->isBlockVisible()){
+
+                    //collisione solo se visibile
+                    if(questionBlock && questionBlock->isBlockVisible() && marioRect.findIntersection(objRect)){
                         result.collided = true;
+                        //grounded se Mario è sopra il blocco
                         if(row == (int)((y + height) / CELL_SIZE))
                             result.grounded = true;
                     }
-               }else if(obj->getType() == ObjectType::FLOOR || obj->getType() == ObjectType::STAIR || obj->getType() == ObjectType::BLOCK){
-                    result.collided = true;
-                    if(verticalVelocity >= 0 && y + height <= row * CELL_SIZE + CELL_SIZE)
-                        result.grounded = true;
+                }else if(
+                    obj->getType() == ObjectType::FLOOR ||
+                    obj->getType() == ObjectType::STAIR ||
+                    obj->getType() == ObjectType::BLOCK
+                ){
+                    if(marioRect.findIntersection(objRect)) {
+                        result.collided = true;
+                        if(verticalVelocity >= 0 && y + height <= row * CELL_SIZE + CELL_SIZE)
+                            result.grounded = true;
+                    }
                 }
             }
         }

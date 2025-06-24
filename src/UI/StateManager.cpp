@@ -1,6 +1,8 @@
 #include "../../headers/UI/StateManager.h"
 #include "../../headers/UI/UIutils.h"
 
+extern Map map;
+
 void State::init(){
 
     font = std::make_unique<sf::Font>();
@@ -17,12 +19,15 @@ void State::init(){
     hud.init(*font);
     startScreen.init(*font, *titleFont);
     gameOverScreen.init(font, titleFont, *coinSprite);
+    victoryScreen.init(font, titleFont, *coinSprite);
 }
 
 void State::draw(Renderer& renderer, const sf::View& view, int coinCounter){
     sf::Vector2f mousePos = renderer.getWindow().mapPixelToCoords(sf::Mouse::getPosition(renderer.getWindow()));
     if(showStartScreen)
         startScreen.draw(renderer, view, mousePos);
+    else if(victory)
+        victoryScreen.draw(renderer, view, coinCounter, mousePos);
     else if(gameOver)
         gameOverScreen.draw(renderer, view, coinCounter, mousePos);
     else
@@ -31,9 +36,16 @@ void State::draw(Renderer& renderer, const sf::View& view, int coinCounter){
 
 void State::checkGameOver(const sf::View& view, const Mario& mario){
     float bottom = view.getCenter().y + view.getSize().y / 2.f;
-    if(mario.getPosition().y > bottom)
+
+    if(mario.getPosition().y > bottom){
         gameOver = true;
-    
+        victory = false;
+    }
+    if(map.marioHasFinished(mario.getRect())){
+        victory = true;
+        gameOver = false;
+        return;
+    }
 }
 
 bool State::isStartClicked(const sf::Vector2f& mousePos) const{
@@ -41,15 +53,22 @@ bool State::isStartClicked(const sf::Vector2f& mousePos) const{
 }
 
 bool State::isRetryClicked(const sf::Vector2f& mousePos) const{
-    return gameOver && gameOverScreen.isRetryClicked(mousePos);
+    return(gameOver && gameOverScreen.isRetryClicked(mousePos)) ||
+        (victory && victoryScreen.isRetryClicked(mousePos));
 }
 
 bool State::isMenuClicked(const sf::Vector2f& mousePos) const{
-    return gameOver && gameOverScreen.isMenuClicked(mousePos);
+    return(gameOver && gameOverScreen.isMenuClicked(mousePos)) ||
+        (victory && victoryScreen.isMenuClicked(mousePos));
+}
+
+bool State::isContinueClicked(const sf::Vector2f& mousePos) const{
+    return victory && victoryScreen.isContinueClicked(mousePos);
 }
 
 void State::resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile){
     gameOver = false;
+    victory = false;
     coinCounter = 0;
     map.createMapFromFile(mapFile);
     mario.resetVerticalSpeed();

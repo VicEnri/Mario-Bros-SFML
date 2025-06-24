@@ -10,6 +10,7 @@
 #include"../Map.h"
 #include"../TextureManager.h"
 #include"../Renderer.h"
+#include"VictoryScreen.h"
 
 class State{
     public:
@@ -20,11 +21,13 @@ class State{
         bool isStartClicked(const sf::Vector2f& mousePos) const;
         bool isRetryClicked(const sf::Vector2f& mousePos) const;
         bool isMenuClicked(const sf::Vector2f& mousePos) const;
+        bool isContinueClicked(const sf::Vector2f& mousePos) const;
 
         void resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile);
 
         bool showStartScreen = true;
         bool gameOver = false;
+        bool victory = false;
 
 
     private:
@@ -35,6 +38,7 @@ class State{
         HUD hud;
         StartScreen startScreen;
         GameOverScreen gameOverScreen;
+        VictoryScreen victoryScreen;
 
         
 };
