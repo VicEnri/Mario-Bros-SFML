@@ -14,11 +14,12 @@
 #include"../headers/Flag.h"
 #include"../headers/Castle.h"
 
+
 extern Mario mario;
 
 Map::Map(){}
 
-void Map::createMapFromFile(const char* filename){
+void Map::createMapFromFile(const char* filename, std::vector<std::unique_ptr<Goomba>>& goombas){
     map2D.clear();
     sf::Image image;
     if(!image.loadFromFile(filename))
@@ -78,6 +79,11 @@ void Map::createMapFromFile(const char* filename){
                 obj = std::make_unique<Castle>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+            }else if(pixelColor == sf::Color(139,69,19)){ //marrone scuro
+                auto goomba = std::make_unique<Goomba>();
+                goomba->init();
+                goomba->setPosition(x * CELL_SIZE, y * CELL_SIZE);
+                goombas.push_back(std::move(goomba));
             }
             column.push_back(std::move(obj));
         }
@@ -87,9 +93,8 @@ void Map::createMapFromFile(const char* filename){
 
 void Map::update(float deltaTime){
     for (const auto& column : map2D) {
-        for (const auto& obj : column) {
+        for(const auto& obj : column)
             if (obj) obj->update(deltaTime);
-        }
     }
 }
 
@@ -106,72 +111,29 @@ void Map::spawnCoinAboveBlock(int column, int row){
 
 void Map::draw(Renderer& renderer){
     sf::View view = renderer.getWindow().getView();
-
     sf::FloatRect viewRect(
         view.getCenter() - view.getSize() / 2.f,
         view.getSize()
     );
 
-    for(size_t i = 0; i < map2D.size(); ++i){
-        for(size_t j = 0; j < map2D[i].size(); ++j){
-            auto obj = map2D[i][j].get();
-            if(obj){
-                sf::Vector2f pos = obj->getPosition();
-                sf::FloatRect objRect(pos, { CELL_SIZE, CELL_SIZE });
+    for(const auto& column : map2D){
+        for(const auto& objPtr : column){
+            if (!objPtr) continue;
 
-                if(dynamic_cast<Hill*>(obj) || dynamic_cast<Cloud*>(obj)){
-                    obj->draw(renderer);
-                    continue;
-                }
-
-                if(
-                    objRect.position.x + objRect.size.x > viewRect.position.x &&
-                    objRect.position.x < viewRect.position.x + viewRect.size.x &&
-                    objRect.position.y + objRect.size.y > viewRect.position.y &&
-                    objRect.position.y < viewRect.position.y + viewRect.size.y
-                )
-                    obj->draw(renderer);
-            }
+            auto intersectionOpt = objPtr->getRect().findIntersection(viewRect);
+                if(intersectionOpt.has_value() && intersectionOpt->size.x > 0 && intersectionOpt->size.y > 0)
+                    objPtr->draw(renderer);
         }
     }
 }
 
 
-std::pair<int, int> Map::getFlagPosition() const{
-    for (size_t x = 0; x < map2D.size(); ++x) {
-        for (size_t y = 0; y < map2D[x].size(); ++y) {
-            if (map2D[x][y] && map2D[x][y]->getType() == ObjectType::FLAG)
-                return {x, y};
+sf::FloatRect Map::getFlagRect() const{
+    for(const auto& column : map2D){
+        for (const auto& obj : column){
+            if(obj && obj->getType() == ObjectType::FLAG)
+                return obj->getRect();
         }
     }
-    return {-1, -1};
-}
-
-bool Map::marioHasFinished(const sf::FloatRect& marioBounds) const{
-    auto [flagX, flagY] = getFlagPosition();
-    if(flagX == -1) return false;
-
-    for(size_t y = flagY; y < map2D[flagX].size(); ++y){
-        const auto& obj = map2D[flagX][y];
-        if(obj){
-            //ignoro oggeti che possono essere sotto pixel dorato(nessuno)
-            ObjectType type = obj->getType();
-            if (type == ObjectType::CLOUD || type == ObjectType::BUSH) continue;
-
-            //creo un rettangolo di collisione per l'oggetto
-            sf::FloatRect objBounds(obj->getPosition(), sf::Vector2f(CELL_SIZE, CELL_SIZE));
-            if (marioBounds.findIntersection(objBounds))
-                return true;
-        }else{
-            //se la cella è vuota, creo un rettangolo nella posizione della cella vuota.
-            sf::FloatRect emptyBounds(
-                sf::Vector2f((float)(flagX * CELL_SIZE), (float)(y * CELL_SIZE)),
-                sf::Vector2f((float)(CELL_SIZE), (float)(CELL_SIZE))
-            );
-            if (marioBounds.findIntersection(emptyBounds))
-                return true;
-        }
-    }
-
-    return false;
+    return sf::FloatRect(); //flag non trovata, empty rect
 }

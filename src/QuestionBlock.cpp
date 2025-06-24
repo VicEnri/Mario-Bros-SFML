@@ -4,7 +4,9 @@
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-QuestionBlock::QuestionBlock(int coins) : Object(ObjectType::QUESTION_BLOCK), runAnimation(2.0f), isHit(false), coins(coins), isVisible(true) {}
+QuestionBlock::QuestionBlock(int coins) : Object(ObjectType::QUESTION_BLOCK), runAnimation(2.0f), isHit(false), coins(coins), isVisible(true) {
+    rect = sf::FloatRect(sf::Vector2f{0, 0}, sf::Vector2f{CELL_SIZE, CELL_SIZE});
+}
 
 void QuestionBlock::init(){
     textures[0] = TextureManager::getTexture("../assets/images/QuestionBlock/QuestionBlock1.png");
@@ -24,6 +26,11 @@ void QuestionBlock::init(){
     for(int i = 0; i < 4; ++i)
         runAnimation.addFrame(Frame(&textures[i], (i + 1) * 0.20f));
 
+}
+
+void QuestionBlock::setPosition(float x, float y){
+    rect.position = {x, y};
+    sprite->setPosition({x, y});
 }
 
 void QuestionBlock::update(float deltaTime){

@@ -4,7 +4,9 @@
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-Coin::Coin() : Object(ObjectType::COIN), runAnimation(2.0f) {}
+Coin::Coin() : Object(ObjectType::COIN), runAnimation(2.0f) {
+    rect = sf::FloatRect(sf::Vector2f{0, 0}, sf::Vector2f{CELL_SIZE, CELL_SIZE});
+}
 
 void Coin::init(){
     
@@ -29,6 +31,11 @@ void Coin::init(){
 
     for(int i = 0; i < 10; ++i)
         runAnimation.addFrame(Frame(&textures[i], (i + 1) * 0.20f));
+}
+
+void Coin::setPosition(float x, float y){
+    rect.position = {x, y};
+    sprite->setPosition({x, y});
 }
 
 void Coin::update(float deltaTime){

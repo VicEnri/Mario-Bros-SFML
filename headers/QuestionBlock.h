@@ -14,7 +14,7 @@ class QuestionBlock : public Object{
         void draw(Renderer& renderer) override;
         void update(float deltaTime) override;
 
-        void setPosition(float x, float y) override {sprite->setPosition({x, y});}
+        void setPosition(float x, float y) override;
         sf::Vector2f getPosition() const override {return sprite->getPosition();}
 
         bool hit();

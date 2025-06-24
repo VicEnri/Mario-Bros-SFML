@@ -20,8 +20,6 @@ class Mario :
 
             sf::Vector2f getPosition() const override {return sprite->getPosition();}
 
-            sf::FloatRect getRect() const {return rect;}
-
         private:
 
             float speed;

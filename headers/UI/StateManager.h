@@ -2,6 +2,7 @@
 
 #include<SFML/Graphics.hpp>
 #include<memory>
+#include<vector>
 
 #include"HUD.h"
 #include"StartScreen.h"
@@ -16,14 +17,14 @@ class State{
     public:
         void init();
         void draw(Renderer& renderer, const sf::View& view, int coinCounter);
-        void checkGameOver(const sf::View& view, const Mario& mario);
+        void checkGameOver(const sf::View& view, const Mario& mario, std::vector<std::unique_ptr<Goomba>>& goombas);
 
         bool isStartClicked(const sf::Vector2f& mousePos) const;
         bool isRetryClicked(const sf::Vector2f& mousePos) const;
         bool isMenuClicked(const sf::Vector2f& mousePos) const;
         bool isContinueClicked(const sf::Vector2f& mousePos) const;
 
-        void resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile);
+        void resetGame(Map& map, int& coinCounter, Mario& mario, std::vector<std::unique_ptr<Goomba>>& goombas, const char* mapFile);
 
         bool showStartScreen = true;
         bool gameOver = false;

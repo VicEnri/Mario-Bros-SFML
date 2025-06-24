@@ -4,7 +4,9 @@
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-FloorBlock::FloorBlock() : Object(ObjectType::FLOOR) {}
+FloorBlock::FloorBlock() : Object(ObjectType::FLOOR) {
+    rect = sf::FloatRect(sf::Vector2f{0, 0}, sf::Vector2f{CELL_SIZE, CELL_SIZE});
+}
 
 void FloorBlock::init() {
     
@@ -17,6 +19,11 @@ void FloorBlock::init() {
         (float)CELL_SIZE / texture.getSize().x,
         (float)CELL_SIZE / texture.getSize().y
     ));
+}
+
+void FloorBlock::setPosition(float x, float y){
+    rect.position = {x, y};
+    sprite->setPosition({x, y});
 }
 
 void FloorBlock::draw(Renderer& renderer){

@@ -34,18 +34,26 @@ void State::draw(Renderer& renderer, const sf::View& view, int coinCounter){
         hud.draw(renderer, view, coinCounter);
 }
 
-void State::checkGameOver(const sf::View& view, const Mario& mario){
+void State::checkGameOver(const sf::View& view, const Mario& mario, std::vector<std::unique_ptr<Goomba>>& goombas){
     float bottom = view.getCenter().y + view.getSize().y / 2.f;
 
     if(mario.getPosition().y > bottom){
         gameOver = true;
         victory = false;
     }
-    if(map.marioHasFinished(mario.getRect())){
-        victory = true;
-        gameOver = false;
-        return;
+    sf::FloatRect flagRect = map.getFlagRect();
+        if (mario.getRect().findIntersection(flagRect) && !gameOver && !victory) {
+            victory = true;
+            gameOver = false;
+        }
+
+    for(auto& goomba : goombas){
+        if (mario.getRect().findIntersection(goomba->getRect()) && !gameOver && !victory){
+            gameOver = true;
+            victory = false;
+        }
     }
+
 }
 
 bool State::isStartClicked(const sf::Vector2f& mousePos) const{
@@ -66,10 +74,11 @@ bool State::isContinueClicked(const sf::Vector2f& mousePos) const{
     return victory && victoryScreen.isContinueClicked(mousePos);
 }
 
-void State::resetGame(Map& map, int& coinCounter, Mario& mario, const char* mapFile){
+void State::resetGame(Map& map, int& coinCounter, Mario& mario, std::vector<std::unique_ptr<Goomba>>& goombas, const char* mapFile){
     gameOver = false;
     victory = false;
     coinCounter = 0;
-    map.createMapFromFile(mapFile);
+    goombas.clear();
+    map.createMapFromFile(mapFile, goombas);
     mario.resetVerticalSpeed();
 }

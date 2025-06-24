@@ -7,6 +7,7 @@
 #include "../headers/TextureManager.h"
 
 extern Collision collision;
+extern Map map;
 
 Mario::Mario(sf::Vector2f position) : 
     Object(ObjectType::MARIO),

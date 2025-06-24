@@ -19,6 +19,11 @@ void Castle::init() {
     ));
 }
 
+void Castle::setPosition(float x, float y){
+    rect.position = {x, y};
+    sprite->setPosition({x, y});
+}
+
 void Castle::draw(Renderer& renderer){
     if(sprite)
         renderer.draw(*sprite);

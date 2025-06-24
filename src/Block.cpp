@@ -4,7 +4,9 @@
 #include "../headers/Global.h"
 #include "../headers/TextureManager.h"
 
-Block::Block() : Object(ObjectType::BLOCK) {}
+Block::Block() : Object(ObjectType::BLOCK) {
+    rect = sf::FloatRect(sf::Vector2f{0, 0}, sf::Vector2f{CELL_SIZE, CELL_SIZE});
+}
 
 void Block::init(){
 
@@ -17,6 +19,11 @@ void Block::init(){
         (float)CELL_SIZE / texture.getSize().x,
         (float)CELL_SIZE / texture.getSize().y
     ));
+}
+
+void Block::setPosition(float x, float y){
+    rect.position = {x, y};
+    sprite->setPosition({x, y});
 }
 
 void Block::draw(Renderer& renderer){

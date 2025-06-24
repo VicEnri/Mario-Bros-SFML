@@ -31,12 +31,10 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
 
             const auto& obj = map2D[column][row];
             if(obj){
-                sf::FloatRect objRect(
-                    sf::Vector2f(float(column * CELL_SIZE), (float)(row * CELL_SIZE)),
-                    sf::Vector2f((float)CELL_SIZE, (float)CELL_SIZE));
+                const sf::FloatRect& objRect = obj->getRect();
 
                 if(obj->getType() == ObjectType::COIN){
-                    if(marioRect.findIntersection(objRect)) {
+                    if(marioRect.findIntersection(objRect)){
                         map2D[column][row] = nullptr;
                         coinCounter++;
                     }
@@ -44,16 +42,15 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
                     QuestionBlock* questionBlock = dynamic_cast<QuestionBlock*>(obj.get());
 
                     //colpo da sotto
-                    if(questionBlock && verticalVelocity < 0 && marioRect.findIntersection(objRect) && (y + height) > (row * CELL_SIZE)){
+                    if(questionBlock && verticalVelocity < 0 && marioRect.findIntersection(objRect) && (y + height) > objRect.position.y)
                         if(questionBlock->hit())
                             map.spawnCoinAboveBlock(column, row);
-                    }
 
                     //collisione solo se visibile
                     if(questionBlock && questionBlock->isBlockVisible() && marioRect.findIntersection(objRect)){
                         result.collided = true;
                         //grounded se Mario è sopra il blocco
-                        if(row == (int)((y + height) / CELL_SIZE))
+                        if(y + height <= objRect.position.y + objRect.size.y)
                             result.grounded = true;
                     }
                 }else if(
@@ -61,9 +58,9 @@ checkCollisionResult Collision::checkCollision(float x, float y, float width, fl
                     obj->getType() == ObjectType::STAIR ||
                     obj->getType() == ObjectType::BLOCK
                 ){
-                    if(marioRect.findIntersection(objRect)) {
+                    if(marioRect.findIntersection(objRect)){
                         result.collided = true;
-                        if(verticalVelocity >= 0 && y + height <= row * CELL_SIZE + CELL_SIZE)
+                        if(verticalVelocity >= 0 && y + height <= objRect.position.y + objRect.size.y)
                             result.grounded = true;
                     }
                 }
