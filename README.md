@@ -70,7 +70,7 @@ make
 
 ## 🗒️ Note sullo sviluppo
 
-Durante lo sviluppo ho creato **10 release** nel modo sbagliato, perché ho dovuto dividere il progetto in **10 tappe** per implementare e testare gradualmente le varie funzionalità.
+Durante lo sviluppo ho creato **10 release** nel modo sbagliato, perché ho dovuto dividere il progetto in **9 tappe** per implementare e testare gradualmente le varie funzionalità.
 
 ## ❤️ Credits
 
