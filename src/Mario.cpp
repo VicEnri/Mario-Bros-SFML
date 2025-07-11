@@ -82,7 +82,7 @@ void Mario::update(float deltaTime){
 
     if(!isGrounded) //se salta
         sprite->setTexture(textures[4]);
-    else if(abs(velocity) > 0.02f) //se si muove
+    else if(std::abs(velocity) > 0.02f) //se si muove
         sprite->setTexture(*runAnimation.update(deltaTime));
     else //se è fermo
         sprite->setTexture(textures[3]);

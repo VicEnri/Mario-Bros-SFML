@@ -1,29 +1,39 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.28)
 
-# Set the project name
-project(mario)
+set(CMAKE_C_COMPILER "clang"  CACHE STRING "" FORCE)
+set(CMAKE_CXX_COMPILER "clang++" CACHE STRING "" FORCE)
+project(MarioBrosSFML LANGUAGES CXX)
 
-# Set the C++ standard (obbligatorio per SFML 3.0)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Directory di output per tutti gli eseguibili
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-# Trova SFML 3.0 (REQUIRED fallisce se non trovato)
-find_package(SFML 3.0 REQUIRED COMPONENTS Graphics Window System)
+# --- SFML via FetchContent ---
+include(FetchContent)
+FetchContent_Declare(SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG        3.0.0
+    GIT_SHALLOW    ON
+    EXCLUDE_FROM_ALL
+    SYSTEM
+)
+# Disabilito esempi e test di SFML per velocizzare la build
+set(SFML_BUILD_EXAMPLES   OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_TEST_SUITE OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(SFML)
 
-# Trova il pacchetto Threads (necessario per SFML 3.0)
 find_package(Threads REQUIRED)
 
-# Aggiungi l'eseguibile
+# --- Mario Bros Game ---
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "headers/*.h")
 
+add_executable(mario ${SOURCES})
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+target_include_directories(mario PRIVATE headers)
 
-# Linka SFML in modo moderno (usando i target SFML::)
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(mario PRIVATE
     SFML::Graphics
     SFML::Window
     SFML::System
-    Threads::Threads  # Necessario per SFML 3.0
+    Threads::Threads
 )

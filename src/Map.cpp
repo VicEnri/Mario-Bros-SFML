@@ -12,7 +12,6 @@
 #include"../headers/Bush.h"
 #include"../headers/Hill.h"
 #include"../headers/Flag.h"
-#include"../headers/Castle.h"
 
 
 extern Mario mario;
@@ -73,10 +72,6 @@ void Map::createMapFromFile(const char* filename, std::vector<std::unique_ptr<Go
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }else if(pixelColor == sf::Color(255,215,0)){ //oro
                 obj = std::make_unique<Flag>();
-                obj->init();
-                obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
-            }else if(pixelColor == sf::Color(0,0,255)){ //blu
-                obj = std::make_unique<Castle>();
                 obj->init();
                 obj->setPosition(x * CELL_SIZE, y * CELL_SIZE);
             }else if(pixelColor == sf::Color(139,69,19)){ //marrone scuro

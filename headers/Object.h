@@ -15,7 +15,6 @@ enum class ObjectType{
     HILL,
     BUSH,
     FLAG,
-    CASTLE,
     GOOMBA
 };
 
@@ -33,6 +32,8 @@ class Object {
         ObjectType getType() const { return type; }
 
         const sf::FloatRect& getRect() const { return rect; }
+
+        virtual ~Object() = default;
 
     protected:
         sf::FloatRect rect; //rettangolo di collisione
